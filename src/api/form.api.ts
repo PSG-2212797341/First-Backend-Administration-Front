@@ -5,7 +5,7 @@ import type { UsuallyReturn } from "./types/usually.type";
 /**
  * @description 保存一个动态表单
  */
-export const createDynamicForm = (params: CreateForm): Promise<UsuallyReturn<null>> => {
+export const createDynamicForm = (params: CreateForm): Promise<UsuallyReturn<null, string[]>> => {
   return http.post("dynamic-forms", params);
 };
 

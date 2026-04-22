@@ -1,8 +1,14 @@
 import "./App.css";
+import NProgressBar from "./components/n-progress";
 import AppRoutes from "./router";
 
 function App() {
-  return <AppRoutes></AppRoutes>;
+  return (
+    <>
+      <NProgressBar />
+      <AppRoutes />
+    </>
+  );
 }
 
 export default App;

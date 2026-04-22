@@ -11,19 +11,24 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.11.2",
     "@tailwindcss/vite": "^4.2.2",
     "antd": "^6.3.5",
     "axios": "^1.15.0",
     "echarts": "^6.0.0",
+    "nprogress": "^0.2.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^7.14.0"
+    "react-redux": "^9.2.0",
+    "react-router-dom": "^7.14.0",
+    "redux-persist": "^6.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@types/echarts": "^4.9.22",
     "@types/mockjs": "^1.0.10",
     "@types/node": "^24.12.2",
+    "@types/nprogress": "^0.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.1",

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import { navigateByKey } from "./utils/navigationLogic";
-import { generateMenuItems } from "./menuConfig";
+import { generateMenuItems } from "./config/menuConfig";
 
 interface MySiderProps {
   collapsed?: boolean;

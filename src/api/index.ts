@@ -1,6 +1,6 @@
-import axios from "axios";
+import axios, { type AxiosInstance } from "axios";
 
-const http = axios.create({
+const http: AxiosInstance = axios.create({
   // 每次请求发出的时候会自动在请求地址末尾拼接baseURL，然后再交给webpack去进行代理
   baseURL: import.meta.env.VITE_API_BASE_URL,
   timeout: 10000,
@@ -30,6 +30,7 @@ http.interceptors.response.use(
     if (error.response?.status === 401) {
       // 处理未授权
       localStorage.removeItem("token");
+      // 直接跳转登陆页，刷新后redux会从localhost读取，此时token已经清除，防止状态不一致
       window.location.href = "/login";
     }
     return Promise.reject(error);

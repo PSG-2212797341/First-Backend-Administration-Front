@@ -1,15 +1,30 @@
 import React, { useState, useEffect } from "react";
-import { Avatar, Layout, theme, Button } from "antd";
-import { UserOutlined, MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Outlet } from "react-router-dom";
+import { Avatar, Layout, theme, Button, type MenuProps, Dropdown } from "antd";
+import {
+  UserOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UserSwitchOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
+import { Outlet, useNavigate } from "react-router-dom";
 import MySider from "./Sider";
 import lightPng from "@/assets/png/light.png";
+
+import { useDispatch, useSelector } from "react-redux";
+import { type AppDispatch, type RootState } from "@/store";
+import { logout } from "@/store/slices/auth.slice";
 
 const { Header, Content, Sider } = Layout;
 
 const MyLayout: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
+  // 使用store中的数据
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const {
     token: { colorBgContainer },
@@ -32,6 +47,31 @@ const MyLayout: React.FC = () => {
 
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
+  };
+
+  // 在组件内部定义菜单项
+  const userMenuItems: MenuProps["items"] = [
+    {
+      key: "profile",
+      icon: <UserSwitchOutlined />,
+      label: "个人中心",
+    },
+    { type: "divider" },
+    {
+      key: "logout",
+      icon: <LogoutOutlined />,
+      label: "退出登录",
+      danger: true,
+    },
+  ];
+
+  // 菜单点击处理
+  const handleUserMenuClick: MenuProps["onClick"] = ({ key }) => {
+    if (key === "logout") {
+      // 退出登录逻辑
+      dispatch(logout());
+      navigate("/login");
+    }
   };
 
   return (
@@ -94,13 +134,18 @@ const MyLayout: React.FC = () => {
             )}
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-            <img className="cursor-pointer" src={lightPng} />
-            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-              <Avatar className="cursor-pointer" size={24} icon={<UserOutlined />} />
-              <span className="cursor-pointer">用户信息</span>
+          <Dropdown
+            menu={{ items: userMenuItems, onClick: handleUserMenuClick }}
+            placement="bottomRight"
+          >
+            <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+              <img className="cursor-pointer" src={lightPng} />
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <Avatar className="cursor-pointer" size={24} icon={<UserOutlined />} />
+                <span className="cursor-pointer">{user.name}</span>
+              </div>
             </div>
-          </div>
+          </Dropdown>
         </Header>
         <Content
           className="p-4 md:p-7.5"
