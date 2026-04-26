@@ -10,7 +10,7 @@ export type AuthParams = {
  * @description 用户用于获取auth时的返回类型
  */
 export type AuthReturn = {
-  user: { id: string; username: string; createdAt: Date; updatedAt: Date };
+  user: { id: string; username: string; role: "user" | "admin"; createdAt: Date; updatedAt: Date };
   token?: string;
 };
 

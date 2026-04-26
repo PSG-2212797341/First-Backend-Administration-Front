@@ -3,6 +3,7 @@ import Analytics from "@/pages/index/Analytics";
 import BasicForm from "@/pages/form/BasicForm";
 import StandardList from "@/pages/list/StandardList";
 import BasicDetail from "@/pages/detail/BasicDetail";
+import DataReport from "@/pages/report/DataReport";
 import LoginPage from "@/pages/auth/login";
 import MyLayout from "@/layout/Index";
 import ProtectedRoute from "./components/index";
@@ -47,6 +48,11 @@ const AppRoutes = () => {
         {/* 详情列表相关路由 */}
         <Route path="detail">
           <Route path="basic" element={<BasicDetail />} />
+        </Route>
+
+        {/* 报表相关路由 */}
+        <Route path="report">
+          <Route path="data" element={<DataReport />} />
         </Route>
       </Route>
 

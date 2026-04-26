@@ -15,6 +15,9 @@ export const navigateByKey = (navigate: NavigateFunction, key: string) => {
     case "4-1":
       navigate("/detail/basic");
       break;
+    case "5-1":
+      navigate("/report/data");
+      break;
     default:
       // 默认导航到首页（Dashboard）
       navigate("/");

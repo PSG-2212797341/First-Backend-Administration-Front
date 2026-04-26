@@ -9,6 +9,7 @@ interface IAuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   error: string | null;
+  role: "admin" | "user";
 }
 
 export const authSlice = createSlice({
@@ -21,6 +22,7 @@ export const authSlice = createSlice({
     isAuthenticated: false,
     isLoading: false,
     error: null,
+    role: "user",
   } as IAuthState,
   reducers: {
     logout: state => {
@@ -29,6 +31,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = false;
       state.isLoading = false;
       state.error = null;
+      state.role = "user";
     },
   },
   extraReducers: builder => {
@@ -60,6 +63,8 @@ export const authSlice = createSlice({
         };
         // 可能需要保存 token
         state.token = action.payload.data?.token ?? null;
+        // 保存可能需要用到的用户权限
+        state.role = action.payload.data?.user.role;
       })
       .addCase(logins.rejected, (state, action) => {
         state.isLoading = false;

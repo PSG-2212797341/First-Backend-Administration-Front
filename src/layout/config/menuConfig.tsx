@@ -1,5 +1,11 @@
 import React from "react";
-import { AppstoreOutlined, FolderOutlined, MenuOutlined, ReadOutlined } from "@ant-design/icons";
+import {
+  AppstoreOutlined,
+  FolderOutlined,
+  MenuOutlined,
+  ReadOutlined,
+  BarChartOutlined,
+} from "@ant-design/icons";
 import defaultRound from "@/assets/svg/defaultRound.svg";
 import activeRound from "@/assets/svg/activeRound.svg";
 
@@ -57,6 +63,18 @@ export const generateMenuItems = (selectedKeys: string[]) => [
         key: "4-1",
         label: "基础详情页",
         icon: getIcon(selectedKeys, "4-1"),
+      },
+    ],
+  },
+  {
+    key: "5",
+    icon: <BarChartOutlined />,
+    label: "数据报表",
+    children: [
+      {
+        key: "5-1",
+        label: "数据统计",
+        icon: getIcon(selectedKeys, "5-1"),
       },
     ],
   },
