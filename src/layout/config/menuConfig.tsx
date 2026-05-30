@@ -9,72 +9,74 @@ import {
 import defaultRound from "@/assets/svg/defaultRound.svg";
 import activeRound from "@/assets/svg/activeRound.svg";
 
-// 根据选中状态获取图标
-export const getIcon = (selectedKeys: string[], key: string): React.ReactElement => {
-  const isSelected = selectedKeys.includes(key);
+// 💡 依然保持你高分的根据状态动态换图标逻辑
+export const getIcon = (selectedKey: string, currentKey: string): React.ReactElement => {
+  const isSelected = selectedKey === currentKey;
   const svgSrc = isSelected ? activeRound : defaultRound;
-  return <img src={svgSrc} alt="round" style={{ width: 6, height: 6 }} />;
+  return <img src={svgSrc} alt="round" className="w-1.5 h-1.5 inline-block" />;
 };
 
-// 生成菜单项
-export const generateMenuItems = (selectedKeys: string[]) => [
+/**
+ * 🎯 大厂金牌菜单表：将 key 直接和 react-router 的 path 绑定
+ */
+export const generateMenuItems = (currentPath: string) => [
   {
-    key: "1",
+    key: "/", // <-- 路由路径直接当 key
     icon: <AppstoreOutlined />,
     label: "首页",
     children: [
       {
-        key: "1-1",
+        key: "/",
         label: "数据分析",
-        icon: getIcon(selectedKeys, "1-1"),
+        icon: getIcon(currentPath, "/"),
       },
     ],
   },
   {
-    key: "2",
+    key: "/form",
     icon: <FolderOutlined />,
     label: "表单状态",
     children: [
       {
-        key: "2-1",
+        key: "/form/basic",
         label: "基础表单",
-        icon: getIcon(selectedKeys, "2-1"),
+        icon: getIcon(currentPath, "/form/basic"),
       },
     ],
   },
   {
-    key: "3",
+    key: "/list",
     icon: <MenuOutlined />,
     label: "列表状态",
     children: [
       {
-        key: "3-1",
+        key: "/list/standard",
         label: "查询表格",
-        icon: getIcon(selectedKeys, "3-1"),
+        icon: getIcon(currentPath, "/list/standard"),
       },
     ],
   },
   {
-    key: "4",
+    key: "/detail",
     icon: <ReadOutlined />,
     label: "详情列表",
     children: [
       {
-        key: "4-1",
+        key: "/detail/basic",
         label: "基础详情页",
-        icon: getIcon(selectedKeys, "4-1"),
+        icon: getIcon(currentPath, "/detail/basic"),
       },
     ],
   },
   {
-    key: "5",
+    key: "/report",
     icon: <BarChartOutlined />,
     label: "数据报表",
     children: [
       {
-        key: "5-1",
+        key: "/report/data",
         label: "数据统计",
-        icon: getIcon(selectedKeys, "5-1"),
+        icon: getIcon(currentPath, "/report/data"),
       },
     ],
   },

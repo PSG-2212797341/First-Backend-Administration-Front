@@ -1,6 +1,5 @@
 import { message } from "antd";
-import ConfigurablePage from "@/components/configurable/Page";
-import type { PageConfig } from "@/components/configurable/types";
+import type { PageConfig } from "@/components/configurable/configurable.type";
 
 // 模拟 API 接口（实际项目中替换为真实 API）
 const mockApi = {
@@ -70,98 +69,4 @@ const mockApi = {
     console.log("删除用户:", id);
     message.success("用户删除成功");
   },
-};
-
-// 用户管理页面配置
-const userPageConfig: PageConfig = {
-  title: "用户管理",
-  table: {
-    rowKey: "id",
-    columns: [
-      { title: "ID", dataIndex: "id", width: 60, sortable: true },
-      { title: "用户名", dataIndex: "username", width: 120 },
-      { title: "邮箱", dataIndex: "email", width: 200 },
-      { title: "手机号", dataIndex: "phone", width: 150 },
-      {
-        title: "状态",
-        dataIndex: "status",
-        width: 100,
-        valueEnum: {
-          active: { text: "启用", color: "green" },
-          inactive: { text: "禁用", color: "red" },
-        },
-      },
-      { title: "角色", dataIndex: "role", width: 100 },
-      { title: "创建时间", dataIndex: "createdAt", width: 120 },
-    ],
-  },
-  search: {
-    fields: [
-      { name: "username", label: "用户名", type: "input", placeholder: "请输入用户名" },
-      {
-        name: "status",
-        label: "状态",
-        type: "select",
-        options: [
-          { label: "全部", value: "" },
-          { label: "启用", value: "active" },
-          { label: "禁用", value: "inactive" },
-        ],
-      },
-    ],
-  },
-  actions: [
-    { text: "新增用户", key: "add", type: "primary", onClick: () => message.info("点击了新增") },
-    {
-      text: "批量删除",
-      key: "batchDelete",
-      type: "danger",
-      confirm: "确定删除选中用户吗？",
-      onClick: rows => message.info(`删除了 ${rows.length} 个用户`),
-    },
-    {
-      text: "导出数据",
-      key: "export",
-      onClick: rows => message.info(`导出了 ${rows.length} 条数据`),
-    },
-  ],
-  rowActions: [
-    { text: "编辑", key: "edit", onClick: () => {} },
-    { text: "删除", key: "delete", onClick: () => {} },
-  ],
-  form: {
-    title: "用户",
-    width: 600,
-    fields: [
-      {
-        name: "username",
-        label: "用户名",
-        type: "input",
-        required: true,
-        placeholder: "请输入用户名",
-        span: 24,
-      },
-      {
-        name: "email",
-        label: "邮箱",
-        type: "input",
-        required: true,
-        placeholder: "请输入邮箱",
-        span: 24,
-      },
-      { name: "phone", label: "手机号", type: "input", placeholder: "请输入手机号", span: 24 },
-      {
-        name: "status",
-        label: "状态",
-        type: "select",
-        required: true,
-        options: [
-          { label: "启用", value: "active" },
-          { label: "禁用", value: "inactive" },
-        ],
-        span: 24,
-      },
-    ],
-  },
-  api: mockApi,
 };

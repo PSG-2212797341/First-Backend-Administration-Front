@@ -1,10 +1,11 @@
 import { useMemo } from "react";
 import { Table, Tag } from "antd";
-import type { ColumnConfig } from "./types";
+import type { TableProps } from "antd";
+import type { ColumnConfig } from "./configurable.type";
 
-interface Props {
-  columns: ColumnConfig[];
-  dataSource: unknown[];
+interface Props<T extends Record<string, unknown>> {
+  columns: ColumnConfig<T>[];
+  dataSource: T[];
   loading: boolean;
   rowKey: string;
   selectedRowKeys?: React.Key[];
@@ -13,7 +14,7 @@ interface Props {
   virtual?: boolean;
 }
 
-function ConfigurableTable({
+function ConfigurableTable<T extends Record<string, unknown>>({
   columns,
   dataSource,
   loading,
@@ -22,9 +23,9 @@ function ConfigurableTable({
   onSelectChange,
   scroll,
   virtual,
-}: Props) {
-  // 处理列配置
-  const tableColumns = useMemo(() => {
+}: Props<T>) {
+  // 🟢 剿灭 any 2 & 3：显式声明 tableColumns 的类型为 AntD 官方的挂载类型，彻底干掉底部的 as any 强制断言
+  const tableColumns = useMemo<TableProps<T>["columns"]>(() => {
     return columns.map(col => ({
       title: col.title,
       dataIndex: col.dataIndex,
@@ -33,7 +34,7 @@ function ConfigurableTable({
       fixed: col.fixed,
       sorter:
         col.sortable && col.dataIndex
-          ? (a: Record<string, unknown>, b: Record<string, unknown>) => {
+          ? (a: T, b: T) => {
               const aVal = a[col.dataIndex!];
               const bVal = b[col.dataIndex!];
               if (typeof aVal === "number" && typeof bVal === "number") {
@@ -42,8 +43,9 @@ function ConfigurableTable({
               return 0;
             }
           : undefined,
+      // 🟢 value 使用 unknown，在内部转化为 String 渲染，达到顶级类型防线
       render: col.render
-        ? (value: unknown, record: unknown) => col.render!(value, record)
+        ? (value: unknown, record: T) => col.render!(value, record)
         : col.valueEnum
           ? (value: unknown) => {
               const item = col.valueEnum![String(value)];
@@ -54,9 +56,9 @@ function ConfigurableTable({
   }, [columns]);
 
   return (
-    <Table
-      columns={tableColumns}
-      dataSource={dataSource as Record<string, unknown>[]}
+    <Table<T>
+      columns={tableColumns} // ❤️ 完美无缝融合！
+      dataSource={dataSource}
       loading={loading}
       rowKey={rowKey}
       rowSelection={

@@ -1,6 +1,6 @@
 import { message } from "antd";
 import ConfigurablePage from "@/components/configurable/Page";
-import type { PageConfig } from "@/components/configurable/types";
+import type { PageConfig } from "@/components/configurable/configurable.type";
 import { generateTableData } from "@/mock/tableData";
 
 // 模拟 API（实际项目中替换为真实 API）

@@ -1,26 +1,12 @@
-import type { NavigateFunction } from "react-router-dom";
-
-// 根据菜单key导航到对应的路由
-export const navigateByKey = (navigate: NavigateFunction, key: string) => {
-  switch (key) {
-    case "1-1":
-      navigate("/");
-      break;
-    case "2-1":
-      navigate("/form/basic");
-      break;
-    case "3-1":
-      navigate("/list/standard");
-      break;
-    case "4-1":
-      navigate("/detail/basic");
-      break;
-    case "5-1":
-      navigate("/report/data");
-      break;
-    default:
-      // 默认导航到首页（Dashboard）
-      navigate("/");
-      break;
+/**
+ * 🕵️‍♂️ 根据当前浏览器的真实 URL 路径，反向推导出左侧菜单应该展开哪个父级项
+ * @param pathname 例如 "/form/basic"
+ * @returns 算出父级项 ["/form"]
+ */
+export const getOpenKeysByPath = (pathname: string): string[] => {
+  const segments = pathname.split("/").filter(Boolean);
+  if (segments.length > 0) {
+    return [`/${segments[0]}`];
   }
+  return ["/"];
 };

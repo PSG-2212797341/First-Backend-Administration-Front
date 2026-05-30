@@ -1,6 +1,6 @@
 import { Form, Row, Col, Input, Select, Button, Space } from "antd";
 import { SearchOutlined, ReloadOutlined } from "@ant-design/icons";
-import type { SearchFieldConfig } from "./types";
+import type { SearchFieldConfig } from "./configurable.type";
 
 interface Props {
   fields: SearchFieldConfig[];

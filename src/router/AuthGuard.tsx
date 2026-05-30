@@ -3,7 +3,12 @@ import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store";
 import { Spin } from "antd";
-import type { ProtectedRouteProps } from "./types/index.type";
+
+interface ProtectedRouteProps {
+  children: React.ReactNode;
+  requireAuth?: boolean;
+  redirectTo?: string;
+}
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,

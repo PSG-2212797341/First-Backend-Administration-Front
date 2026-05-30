@@ -116,8 +116,8 @@ const DynamicForm = forwardRef<DynamicFormRef, DynamicFormProps>((props, ref) =>
     getForm: () => form,
     getValues: () => form.getFieldsValue(),
     setValues: (values: FormValues) => {
-      // @ts-expect-error - antd的setFieldsValue期望Record<string, any>，但我们需要保持类型安全
-      form.setFieldsValue(values);
+      type AntdSetParams = Parameters<typeof form.setFieldsValue>[0];
+      form.setFieldsValue(values as AntdSetParams);
     },
     reset: () => {
       form.resetFields();

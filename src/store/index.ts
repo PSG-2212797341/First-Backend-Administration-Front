@@ -1,12 +1,24 @@
-import { persistedAuthReducer } from "@/config/presist.store";
+// src/store/index.ts
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore } from "redux-persist";
+import { persistReducer, persistStore } from "redux-persist";
+// 🟢 1. 改为引入我们最新的工厂函数，不再引入已经消失的旧变量
+import { createPersistConfig } from "@/config/persist.store";
+// 🟢 2. 引入你 auth.slice 里的强类型定义
+import authReducer, { type IAuthState } from "@/store/slices/auth.slice";
+
+/**
+ * 🟢 3. 动态生成专属契约
+ * 显式传入 <IAuthState>，TS 会严格校验后面的白名单数组，打错任何一个字母都会爆红！
+ */
+const authPersistConfig = createPersistConfig<IAuthState>(["token", "isAuthenticated", "user"]);
+
+// 🛠️ 将专属配置喂给 Reducer
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
 
 export const store = configureStore({
   reducer: {
     auth: persistedAuthReducer,
   },
-  // 修复 redux-persist 与 redux-toolkit 的序列化检查冲突
   middleware: getDefaultMiddleware =>
     getDefaultMiddleware({
       serializableCheck: {
@@ -15,9 +27,7 @@ export const store = configureStore({
     }),
 });
 
-// 导出包装后的store实例
 export const persistor = persistStore(store);
 
-// 导出类型
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
