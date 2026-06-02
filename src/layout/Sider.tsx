@@ -1,5 +1,7 @@
-import { Menu } from "antd";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { Menu } from "antd";
+import type { MenuProps } from "antd";
 import { getOpenKeysByPath } from "./utils/navigationLogic";
 import { generateMenuItems } from "./config/menuConfig";
 
@@ -11,22 +13,18 @@ interface MySiderProps {
 
 function MySider({ collapsed = false, isMobile = false, onMobileClose }: MySiderProps) {
   const navigate = useNavigate();
-  const location = useLocation(); // 🎯 实时抓取浏览器当前真实 URL 路径
+  const location = useLocation();
 
-  // 🔥 核心优化：直接动态计算！删掉 useState 和 useEffect
-  // 每次页面路由一变，React 会自动重新跑这行计算，完全没有“级联渲染”的性能损耗
-  const currentOpenKeys = collapsed ? [] : getOpenKeysByPath(location.pathname);
-
-  // 点击子菜单切页
-  const handleMenuClick = ({ key }: { key: string }) => {
-    navigate(key);
-
-    if (isMobile && onMobileClose) {
-      onMobileClose(); // 移动端点完自动关闭侧边栏
-    }
-  };
+  const [openKeys, setOpenKeys] = useState<string[]>(
+    collapsed ? [] : getOpenKeysByPath(location.pathname)
+  );
 
   const menuItems = generateMenuItems(location.pathname);
+
+  const handleMenuClick: MenuProps["onClick"] = ({ key }) => {
+    navigate(key);
+    if (isMobile && onMobileClose) onMobileClose();
+  };
 
   return (
     <div className="h-full flex flex-col">
@@ -38,8 +36,19 @@ function MySider({ collapsed = false, isMobile = false, onMobileClose }: MySider
           theme="light"
           mode="inline"
           style={{ padding: collapsed ? "12px" : "16px", borderRight: 0 }}
-          selectedKeys={[location.pathname]} // 🎯 保持同步高亮
-          openKeys={currentOpenKeys} // 🎯 换成我们实时动态计算出来的数组
+          selectedKeys={[location.pathname]}
+          openKeys={collapsed ? [] : openKeys}
+          onOpenChange={keys => {
+            const lastKey =
+              keys.find(key => !openKeys.includes(key)) || keys.find(key => openKeys.includes(key));
+
+            if (lastKey) {
+              setOpenKeys([lastKey]);
+              navigate(`${lastKey}/index`);
+            } else {
+              setOpenKeys([]);
+            }
+          }}
           onClick={handleMenuClick}
           items={menuItems}
         />

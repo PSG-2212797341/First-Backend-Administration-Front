@@ -4,6 +4,9 @@
  * @returns 算出父级项 ["/form"]
  */
 export const getOpenKeysByPath = (pathname: string): string[] => {
+  if (pathname === "/" || pathname === "/index") {
+    return ["/home"]; // 当处于首页子路由时，展开 key 为 "/home" 的父级
+  }
   const segments = pathname.split("/").filter(Boolean);
   if (segments.length > 0) {
     return [`/${segments[0]}`];

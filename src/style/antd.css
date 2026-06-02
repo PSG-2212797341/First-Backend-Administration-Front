@@ -8,7 +8,11 @@
   overflow: auto;
 }
 
-/* 菜单颜色自定义 */
+/* 菜单和子菜单自定义 */
+.ant-menu-submenu-title,
+.ant-menu-item {
+  color: rgba(116, 121, 140, 1) !important;
+}
 /* 选中状态颜色 */
 .ant-menu-item-selected {
   color: #0054fe !important;

@@ -51,7 +51,7 @@ const MyLayout: React.FC = () => {
   const handleUserMenuClick: MenuProps["onClick"] = ({ key }) => {
     if (key === "logout") {
       dispatch(logOut());
-      navigate("/login");
+      navigate("/auth/login");
     }
   };
 
