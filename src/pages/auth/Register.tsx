@@ -1,6 +1,6 @@
 // src/pages/auth/register.tsx
 import React, { useEffect } from "react";
-import { Form, Input, Button, Checkbox, Divider, message } from "antd";
+import { Form, Button, Checkbox, Divider, message } from "antd";
 import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ import type { FormProps } from "antd";
 import AuthLayout from "./AuthLayout";
 import type { AppDispatch, RootState } from "@/store";
 import { registers } from "@/store/slices/auth.slice";
+import { MaterialInput } from "@/components/enhanced";
 
 interface RegisterFormValues {
   username?: string;
@@ -75,41 +76,40 @@ const RegisterPage: React.FC = () => {
         name="register_form"
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
-        layout="vertical"
+        layout="horizontal"
         size="large"
       >
         <Form.Item
-          label="用户名"
           name="username"
           rules={[
             { required: true, message: "请输入用户名!" },
             { min: 3, message: "用户名至少3个字符" },
           ]}
         >
-          <Input
+          <MaterialInput
             prefix={<UserOutlined className="text-gray-400" />}
-            placeholder="请输入用户名"
+            required
+            label="用户名"
             disabled={isLoading}
           />
         </Form.Item>
 
         <Form.Item
-          label="电子邮箱"
           name="email"
           rules={[
             { required: true, message: "请输入电子邮箱!" },
             { type: "email", message: "邮箱格式不正确!" },
           ]}
         >
-          <Input
+          <MaterialInput
             prefix={<MailOutlined className="text-gray-400" />}
-            placeholder="请输入电子邮箱"
+            required
+            label="电子邮箱"
             disabled={isLoading}
           />
         </Form.Item>
 
         <Form.Item
-          label="密码"
           name="password"
           rules={[
             { required: true, message: "请输入密码!" },
@@ -119,15 +119,15 @@ const RegisterPage: React.FC = () => {
             },
           ]}
         >
-          <Input.Password
+          <MaterialInput.Password
             prefix={<LockOutlined className="text-gray-400" />}
-            placeholder="请输入密码"
+            required
+            label="密码"
             disabled={isLoading}
           />
         </Form.Item>
 
         <Form.Item
-          label="确认密码"
           name="confirmPassword"
           dependencies={["password"]}
           rules={[
@@ -140,9 +140,10 @@ const RegisterPage: React.FC = () => {
             }),
           ]}
         >
-          <Input.Password
+          <MaterialInput.Password
             prefix={<LockOutlined className="text-gray-400" />}
-            placeholder="请再次输入密码"
+            required
+            label="确认密码"
             disabled={isLoading}
           />
         </Form.Item>

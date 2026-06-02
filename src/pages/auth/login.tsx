@@ -1,6 +1,6 @@
 // src/pages/auth/login.tsx
 import React, { useEffect, useRef } from "react";
-import { Form, Input, Button, Checkbox, Divider, message } from "antd";
+import { Form, Button, Checkbox, Divider, message } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useLocation } from "react-router-dom"; // 🚀 引入 useLocation
@@ -11,6 +11,7 @@ import type { FormProps, InputRef } from "antd"; // 🚀 引入 InputRef 用于�
 import AuthLayout from "./AuthLayout";
 import type { AppDispatch, RootState } from "@/store";
 import { logins } from "@/store/slices/auth.slice";
+import { MaterialInput } from "@/components/enhanced";
 
 interface LoginFormValues {
   username?: string;
@@ -117,40 +118,34 @@ const LoginPage: React.FC = () => {
         layout="vertical"
         size="large"
       >
-        <Form.Item
-          label="用户名"
-          name="username"
-          rules={[{ required: true, message: "请输入用户名!" }]}
-        >
-          <Input
+        <Form.Item name="username" rules={[{ required: true, message: "请输入用户名!" }]}>
+          <MaterialInput
             prefix={<UserOutlined className="text-gray-400" />}
-            placeholder="请输入用户名"
+            required
+            label="用户名"
             disabled={isLoading}
           />
         </Form.Item>
 
-        <Form.Item
-          label="密码"
-          name="password"
-          rules={[{ required: true, message: "请输入密码!" }]}
-        >
-          <Input.Password
+        <Form.Item name="password" rules={[{ required: true, message: "请输入密码!" }]}>
+          <MaterialInput.Password
             ref={passwordInputRef} // 🚀 绑定 Ref，实现自动聚焦
+            required
             prefix={<LockOutlined className="text-gray-400" />}
-            placeholder="请输入密码"
+            label="密码"
             disabled={isLoading}
           />
         </Form.Item>
 
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-6 text-sm">
           <Form.Item name="remember" valuePropName="checked" noStyle>
-            <Checkbox className="text-gray-600" disabled={isLoading}>
+            <Checkbox className="text-gray-600 " disabled={isLoading}>
               记住我
             </Checkbox>
           </Form.Item>
           <Button
             type="link"
-            className="p-0 h-auto text-blue-600 text-sm border-0 bg-transparent shadow-none hover:text-blue-800"
+            className="p-0 h-auto text-blue-600 border-0 bg-transparent shadow-none hover:text-blue-800"
             onClick={() => navigate("/auth/forgot-password")}
           >
             忘记密码?
@@ -176,7 +171,7 @@ const LoginPage: React.FC = () => {
           <span className="text-gray-600">还没有账户? </span>
           <Button
             type="link"
-            className="p-0 h-auto text-blue-600 font-medium border-0 bg-transparent shadow-none hover:text-blue-800"
+            className="p-0 h-auto text-blue-600 border-0 bg-transparent shadow-none hover:text-blue-800"
             onClick={() => navigate("/auth/register")}
             disabled={isLoading}
           >

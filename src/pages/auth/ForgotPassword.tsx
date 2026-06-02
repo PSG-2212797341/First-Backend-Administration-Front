@@ -1,6 +1,6 @@
 // src/pages/auth/forgot-password.tsx
 import React, { useState, useEffect } from "react";
-import { Form, Input, Button, Row, Col, Divider, message } from "antd";
+import { Form, Button, Row, Col, Divider, message } from "antd";
 import { UserOutlined, LockOutlined, SafetyOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -13,6 +13,7 @@ import AuthLayout from "./AuthLayout";
 import type { AppDispatch, RootState } from "@/store";
 import { forgets } from "@/store/slices/auth.slice";
 import { sendCode, verifyCode } from "@/api/auth.api";
+import { MaterialInput } from "@/components/enhanced";
 
 interface ForgotPasswordFormValues {
   username?: string;
@@ -118,44 +119,43 @@ const ForgotPasswordPage: React.FC = () => {
         name="forgot_password_form"
         onFinish={handleFinish}
         onFinishFailed={handleFinishFailed}
-        layout="vertical"
+        layout="horizontal"
         size="large"
       >
         <Form.Item
-          label="用户名"
           name="username"
           rules={[
             { required: true, message: "请输入用户名!" },
             { min: 3, message: "用户名至少3个字符" },
           ]}
         >
-          <Input
+          <MaterialInput
             prefix={<UserOutlined className="text-gray-400" />}
-            placeholder="请输入用户名"
+            required
+            label="用户名"
             disabled={isLoading}
           />
         </Form.Item>
 
         <Form.Item
-          label="新密码"
           name="password"
           rules={[
-            { required: true, message: "请输入密码!" },
+            { required: true, message: "密码" },
             {
               pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
               message: "密码最少8位，且必须同时包含大小写字母与数字",
             },
           ]}
         >
-          <Input.Password
+          <MaterialInput.Password
+            required
             prefix={<LockOutlined className="text-gray-400" />}
-            placeholder="请输入密码"
+            label="密码"
             disabled={isLoading}
           />
         </Form.Item>
 
         <Form.Item
-          label="确认密码"
           name="confirmPassword"
           dependencies={["password"]}
           rules={[
@@ -168,9 +168,10 @@ const ForgotPasswordPage: React.FC = () => {
             }),
           ]}
         >
-          <Input.Password
+          <MaterialInput.Password
+            required
             prefix={<LockOutlined className="text-gray-400" />}
-            placeholder="请再次输入密码"
+            label="确认密码"
             disabled={isLoading}
           />
         </Form.Item>
@@ -179,7 +180,6 @@ const ForgotPasswordPage: React.FC = () => {
           {/* 🌟 左侧：占 14 份 */}
           <Col span={14}>
             <Form.Item
-              label="验证码" // 🚀 留在这里没问题，但要配合右侧的无形占位
               name="code"
               className="mb-0" // 保持底部紧凑
               validateTrigger="onBlur" // 失焦再校验，体验更丝滑
@@ -213,9 +213,10 @@ const ForgotPasswordPage: React.FC = () => {
                 }),
               ]}
             >
-              <Input
+              <MaterialInput
                 prefix={<SafetyOutlined className="text-gray-400" />}
-                placeholder="6位验证码"
+                required
+                label="6位验证码"
                 className="h-12"
                 maxLength={6}
                 disabled={isLoading}
@@ -227,7 +228,7 @@ const ForgotPasswordPage: React.FC = () => {
           {/* 核心修正：利用 h-full 以及特定的 items-end，或者加一个隐形的 Form.Item Label 占位，这是大厂最稳的做法 */}
           <Col span={10} className="flex flex-col justify-end">
             {/* 🚀 极其精妙：加一个空内容的 label，专门用来把右侧的按钮撑到跟左边输入框【绝对平齐】的高度！ */}
-            <Form.Item label=" " className="mb-0">
+            <Form.Item className="mb-0">
               <Button
                 type="default"
                 block
@@ -260,7 +261,7 @@ const ForgotPasswordPage: React.FC = () => {
         <div className="text-center text-sm">
           <span className="text-gray-600">想起密码了? </span>
           <Button
-            type="default"
+            type="link"
             className="p-0 h-auto text-blue-600 font-medium border-0 bg-transparent shadow-none hover:text-blue-800"
             onClick={() => navigate("/auth/login")}
             disabled={isLoading}
