@@ -5,14 +5,12 @@ import type { InputProps, InputRef } from "antd";
 
 interface MaterialInputProps extends Omit<InputProps, "placeholder"> {
   label: string;
-  required: boolean;
 }
 
 const MaterialInput = forwardRef<InputRef, MaterialInputProps>(
   (
     {
       label,
-      required,
       prefix,
       value,
       defaultValue,
@@ -90,7 +88,6 @@ const MaterialInput = forwardRef<InputRef, MaterialInputProps>(
               }}
             >
               {prefix}
-              {required && <span className="text-red-500 ml-0.5">*</span>}
             </span>
           )}
 
@@ -141,14 +138,12 @@ MaterialInput.displayName = "MaterialInput";
 
 interface MaterialPasswordProps extends Omit<InputProps, "placeholder" | "type"> {
   label: string;
-  required: boolean;
 }
 
 const MaterialPassword = forwardRef<InputRef, MaterialPasswordProps>(
   (
     {
       label,
-      required,
       prefix,
       value,
       defaultValue,
@@ -226,7 +221,6 @@ const MaterialPassword = forwardRef<InputRef, MaterialPasswordProps>(
               }}
             >
               {prefix}
-              {required && <span className="text-red-500 ml-0.5">*</span>}
             </span>
           )}
 

@@ -27,7 +27,7 @@ export const generateMenuItems = (currentPath: string) => [
   {
     key: "/user",
     icon: <FolderOutlined />,
-    label: "表单状态",
+    label: "用户管理",
     children: [
       {
         key: "/user/index",

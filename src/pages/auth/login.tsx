@@ -67,7 +67,6 @@ const LoginPage: React.FC = () => {
         const parsed = JSON.parse(savedUser) as Required<Omit<LoginFormValues, "remember">>;
         form.setFieldsValue({
           username: parsed.username,
-          password: parsed.password,
           remember: true,
         });
       } catch {
@@ -121,7 +120,6 @@ const LoginPage: React.FC = () => {
         <Form.Item name="username" rules={[{ required: true, message: "请输入用户名!" }]}>
           <MaterialInput
             prefix={<UserOutlined className="text-gray-400" />}
-            required
             label="用户名"
             disabled={isLoading}
           />
@@ -130,7 +128,6 @@ const LoginPage: React.FC = () => {
         <Form.Item name="password" rules={[{ required: true, message: "请输入密码!" }]}>
           <MaterialInput.Password
             ref={passwordInputRef} // 🚀 绑定 Ref，实现自动聚焦
-            required
             prefix={<LockOutlined className="text-gray-400" />}
             label="密码"
             disabled={isLoading}

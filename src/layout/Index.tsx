@@ -13,7 +13,7 @@ import lightPng from "@/assets/png/light.png";
 
 import { useDispatch, useSelector } from "react-redux";
 import { type AppDispatch, type RootState } from "@/store";
-import { logOut } from "@/store/slices/auth.slice"; // 🎯 确保方法名拼写与你的 slice 完全一致
+import { logOut } from "@/store/slices/auth.slice";
 
 const { Header, Content, Sider } = Layout;
 
@@ -57,13 +57,13 @@ const MyLayout: React.FC = () => {
 
   return (
     <Layout className="h-screen w-screen overflow-hidden">
-      {/* 🖥️ 桌面端固定侧边栏 */}
+      {/* 桌面端固定侧边栏 */}
       {!isMobile && (
         <Sider
           collapsible
           collapsed={collapsed}
           trigger={null}
-          width={220} // 大厂舒适宽度
+          width={220} // 展开宽度
           style={{
             background: colorBgContainer,
             height: "100vh",
@@ -72,17 +72,20 @@ const MyLayout: React.FC = () => {
             top: 0,
             zIndex: 1000,
             boxShadow: "1px 0 4px rgba(0,21,41,.08)",
+            transition: "width 0.2s",
           }}
         >
           <MySider collapsed={collapsed} />
         </Sider>
       )}
 
-      {/* 🚀 主内容包装容器 */}
+      {/* 主内容区域 */}
       <Layout
         style={{
           marginLeft: !isMobile ? (collapsed ? "80px" : "220px") : "0px",
-          transition: "margin-left 0.2s flex flex-col h-screen",
+          transition: "margin-left 0.2s",
+          flexDirection: "column",
+          height: "100vh",
         }}
       >
         <Header
@@ -91,16 +94,16 @@ const MyLayout: React.FC = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            padding: "0 24px",
+            padding: "0 16px",
             borderBottom: "1px solid #f0f0f0",
-            height: "64px",
+            height: "56px", // 压缩高度
           }}
         >
           <Button
             type="text"
             icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
             onClick={() => setCollapsed(!collapsed)}
-            className="text-base"
+            className="text-base hover:bg-gray-100 transition-colors duration-200"
           />
 
           <Dropdown
@@ -117,17 +120,20 @@ const MyLayout: React.FC = () => {
           </Dropdown>
         </Header>
 
-        {/* 🎨 核心画布区：严格防溢出，全面承接你的看板业务 */}
-        <Content className="p-6 overflow-auto bg-gray-50 flex-1 min-h-0">
+        {/* 核心画布区 */}
+        <Content
+          className="p-6 overflow-auto flex-1 min-h-0 bg-gray-50"
+          style={{ maxWidth: 1440, margin: "0 auto" }}
+        >
           <Outlet />
         </Content>
       </Layout>
 
-      {/* 📱 移动端抽屉遮罩与侧边栏 */}
+      {/* 移动端 Drawer */}
       {isMobile && !collapsed && (
         <>
           <div className="fixed inset-0 bg-black/40 z-999" onClick={() => setCollapsed(true)} />
-          <div className="fixed top-0 left-0 bottom-0 w-64 bg-white z-1000 shadow-2xl animate-fade-in-left">
+          <div className="fixed top-0 left-0 bottom-0 w-64 bg-white z-1000 shadow-2xl transition-transform duration-300">
             <MySider collapsed={false} isMobile={true} onMobileClose={() => setCollapsed(true)} />
           </div>
         </>

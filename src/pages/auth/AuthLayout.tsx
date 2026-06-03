@@ -59,11 +59,11 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({ title, subtitle, children }) =>
         */}
         <div className="w-full md:w-[40%] h-full bg-white py-16 px-6 md:p-12 lg:p-16 flex flex-col justify-center relative">
           {/* 表单核心包裹圈 */}
-          <div className="w-full max-w-sm mx-auto">
+          <div className="w-full max-w-sm mx-auto px-4">
             {/* 标题部分 */}
             <div className="mb-9 text-left">
               <h2 className="text-2xl font-bold text-slate-800 tracking-tight">{title}</h2>
-              <p className="text-slate-400 text-sm mt-2.5">{subtitle}</p>
+              <p className="text-slate-400 text-sm mt-2">{subtitle}</p>
             </div>
 
             {/* 业务表单插槽 */}
