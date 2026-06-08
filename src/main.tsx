@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "./store";
 import App from "./App.tsx";
 import "./index.css";
+import { ConfigProvider } from "antd";
 
 createRoot(document.getElementById("root")!).render(
   // 严格模式
@@ -16,7 +17,18 @@ createRoot(document.getElementById("root")!).render(
       <Provider store={store}>
         {/* 加载进度条效果 */}
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          {/* antd的设置 */}
+          <ConfigProvider
+            theme={{
+              components: {
+                Card: {
+                  colorBorderSecondary: "transparent",
+                },
+              },
+            }}
+          >
+            <App />
+          </ConfigProvider>
         </PersistGate>
       </Provider>
     </BrowserRouter>

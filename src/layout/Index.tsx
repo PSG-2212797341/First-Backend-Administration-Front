@@ -95,7 +95,7 @@ const MyLayout: React.FC = () => {
             justifyContent: "space-between",
             alignItems: "center",
             padding: "0 16px",
-            borderBottom: "1px solid #f0f0f0",
+            borderBottom: "1px solid #eff1f5",
             height: "56px", // 压缩高度
           }}
         >
@@ -121,10 +121,7 @@ const MyLayout: React.FC = () => {
         </Header>
 
         {/* 核心画布区 */}
-        <Content
-          className="p-6 overflow-auto flex-1 min-h-0 bg-gray-50"
-          style={{ maxWidth: 1440, margin: "0 auto" }}
-        >
+        <Content className="p-6 overflow-auto flex-1 min-h-0" style={{ background: "#f9fbfd" }}>
           <Outlet />
         </Content>
       </Layout>

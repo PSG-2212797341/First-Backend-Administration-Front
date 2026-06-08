@@ -15,14 +15,14 @@
 }
 /* 选中状态颜色 */
 .ant-menu-item-selected {
-  color: #0054fe !important;
+  color: #2572f6 !important;
   background-color: transparent !important;
 }
 
 /* 父菜单在子菜单选中时的样式 */
 .ant-menu-submenu-selected > .ant-menu-submenu-title {
-  color: #ffffff !important;
-  background-color: #0054fe !important;
+  color: #2572f6 !important;
+  background-color: #f2f7fd !important;
 }
 
 /* 子菜单背景色设置 */
@@ -153,6 +153,32 @@
 /* 改善移动端侧边栏动画 */
 .ant-layout-sider {
   transition: all 0.2s cubic-bezier(0.34, 0.69, 0.1, 1) !important;
+}
+
+/* ── 全局微妙滚动条样式 —— 侧边栏等区域使用 ── */
+/* Webkit 浏览器（Chrome / Edge / Safari） */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.12);
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.24);
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.12) transparent;
 }
 
 /* 隐藏移动端不需要的元素 */
